@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  api:
+    image: covenant-enterprise:3.0.0
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: production
