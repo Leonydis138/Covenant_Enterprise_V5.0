@@ -1,0 +1,13 @@
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = ["W293", "W292"]  # optional if you want to relax whitespace rules
+
+[tool.ruff.lint.isort]
+known-first-party = ["covenant"]
+combine-as-imports = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
