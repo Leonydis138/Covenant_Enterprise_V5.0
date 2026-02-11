@@ -309,11 +309,13 @@ class UltimateConstitutionalEngine:
             }
             
         except Exception as e:
-            logger.error(f"Ultimate evaluation failed: {e}")
+            # Log full exception details, including stack trace, on the server
+            logger.exception("Ultimate evaluation failed")
+            # Return a generic error message to avoid exposing internal details
             return {
                 "action_id": action.get("id", "unknown"),
                 "is_allowed": False,
-                "error": str(e),
+                "error": "Internal engine error",
                 "confidence": 0.0,
                 "safe_fallback_applied": True
             }
