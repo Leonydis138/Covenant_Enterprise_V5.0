@@ -14,31 +14,27 @@ jobs:
       run:
         working-directory: backend
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
           pip install -r requirements.txt
-          if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+          pip install ruff mypy
 
-      - name: Lint
+      - name: Lint & Format
         run: |
-          if [ -f pyproject.toml ]; then
-            ruff check .
-          else
-            echo "No lint config, skipping"
-          fi
+          ruff check .
+          ruff format --check .
 
-      - name: Test
-        run: |
-          pytest --maxfail=1 --disable-warnings -q
+      - name: Type check
+        run: mypy .
+
+      - name: Run tests
+        run: pytest -q
 
   frontend-ci:
     name: Frontend CI
@@ -47,51 +43,43 @@ jobs:
       run:
         working-directory: frontend
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: 'frontend/package-lock.json'
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: "frontend/package-lock.json"
 
       - name: Install dependencies
         run: npm ci
 
       - name: Lint
-        run: |
-          if [ -f package.json ]; then
-            npm run lint --if-present
-          fi
+        run: npm run lint --if-present
 
       - name: Test
-        run: |
-          npm test -- --watch=false --ci --reporters=default --reporters=jest-junit || echo "Tests failed or not configured"
+        run: npm test -- --watch=false --ci || true
 
       - name: Build
         run: npm run build
 
-  build-and-push-images:
-    name: Build and Push Docker Images
+  build-and-push:
+    name: Build & Push Docker Images
     needs: [backend-ci, frontend-ci]
     runs-on: ubuntu-latest
     env:
       REGISTRY_URL: ${{ secrets.REGISTRY_URL }}
       IMAGE_TAG: ${{ github.sha }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Log in to registry
-        uses: docker/login-action@v3
+      - uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY_URL }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Build and push backend image
+      - name: Backend image
         uses: docker/build-push-action@v6
         with:
           context: ./backend
@@ -101,7 +89,7 @@ jobs:
             ${{ env.REGISTRY_URL }}/enterprise-backend:${{ env.IMAGE_TAG }}
             ${{ env.REGISTRY_URL }}/enterprise-backend:latest
 
-      - name: Build and push frontend image
+      - name: Frontend image
         uses: docker/build-push-action@v6
         with:
           context: ./frontend
@@ -113,32 +101,26 @@ jobs:
 
   deploy:
     name: Deploy to Kubernetes
-    needs: [build-and-push-images]
+    needs: build-and-push
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     env:
       REGISTRY_URL: ${{ secrets.REGISTRY_URL }}
       IMAGE_TAG: ${{ github.sha }}
-      ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v4
-        with:
-          version: 'latest'
+      - uses: azure/setup-kubectl@v4
 
       - name: Configure kubeconfig
         run: |
-          mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
 
-      - name: Apply Kubernetes manifests
+      - name: Deploy
         run: |
-          # Example: using plain manifests with image overrides via kustomize or envsubst
-          # Option 1: envsubst
           export BACKEND_IMAGE=${REGISTRY_URL}/enterprise-backend:${IMAGE_TAG}
           export FRONTEND_IMAGE=${REGISTRY_URL}/enterprise-frontend:${IMAGE_TAG}
-          export ENVIRONMENT=${ENVIRONMENT}
-          find infra/k8s -name '*.yaml' -print0 | xargs -0 -I{} sh -c 'envsubst < "{}" | kubectl apply -f -'
+          envsubst < infra/k8s/deployment.yaml | kubectl apply -f -
+          kubectl apply -f infra/k8s/service.yaml
+          kubectl apply -f infra/k8s/ingress.yaml
