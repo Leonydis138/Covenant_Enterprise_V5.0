@@ -54,7 +54,7 @@ opentelemetry-instrumentation-sqlalchemy==0.43b0
 opentelemetry-instrumentation-redis==0.43b0
 opentelemetry-exporter-jaeger==1.21.0
 opentelemetry-exporter-prometheus==0.43b0
-sentry-sdk[fastapi]==1.40.3
+sentry-sdk[fastapi]==2.52.0
 structlog==24.1.0
 python-json-logger==2.0.7
 
