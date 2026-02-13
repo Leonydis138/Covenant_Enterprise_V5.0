@@ -93,7 +93,7 @@ kombu==5.3.5
 
 # Distributed Computing
 dask[complete]==2024.2.1
-distributed==2024.2.1
+distributed==2026.1.2
 
 # Data Validation
 marshmallow==3.21.0
