@@ -155,7 +155,7 @@ opencv-python==4.9.0.80
 imageio==2.33.1
 
 # PDF & Documents
-pypdf==4.0.1
+pypdf==6.6.2
 reportlab==4.1.0
 weasyprint==60.2
 python-docx==1.1.0
