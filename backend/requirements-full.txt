@@ -170,7 +170,7 @@ minio==7.2.20
 # Feature Flags & Config
 launchdarkly-server-sdk==9.2.1
 python-decouple==3.8
-environs==11.0.0
+environs==14.5.0
 dynaconf==3.2.4
 
 # Rate Limiting
