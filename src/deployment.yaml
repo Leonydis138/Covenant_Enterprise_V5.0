@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: covenant-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: covenant
+  template:
+    metadata:
+      labels:
+        app: covenant
+    spec:
+      containers:
+      - name: api
+        image: covenant:5.0.0
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: covenant-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: covenant
+  ports:
+  - port: 80
+    targetPort: 8000
