@@ -16,8 +16,8 @@ redis==5.0.1
 hiredis==2.3.2
 
 # AI/ML Core
-torch==2.2.1
-transformers==4.38.1
+torch==2.10.0
+transformers==5.1.0
 sentence-transformers==2.5.1
 scikit-learn==1.4.1.post1
 numpy==1.26.4
