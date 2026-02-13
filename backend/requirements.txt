@@ -85,7 +85,7 @@ protobuf==6.33.5
 
 # WebSockets
 websockets==12.0
-python-socketio==5.14.0
+python-socketio==5.16.1
 
 # Task Queue
 celery[redis]==5.3.6
