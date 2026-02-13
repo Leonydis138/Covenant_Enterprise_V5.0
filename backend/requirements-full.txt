@@ -242,7 +242,7 @@ shapely==2.0.2
 
 # Financial & Crypto
 ccxt==4.2.25
-stripe==7.14.0
+stripe==14.3.0
 
 # Monitoring SDKs
 datadog==0.49.1
