@@ -24,7 +24,7 @@ tortoise-orm==0.20.0
 redis[hiredis]==5.0.1
 aioredis==2.0.1
 celery[redis]==5.3.6
-dramatiq[redis]==1.15.0
+dramatiq[redis]==2.0.1
 rq==1.16.1
 
 # Task Scheduling
