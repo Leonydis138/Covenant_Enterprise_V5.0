@@ -147,7 +147,7 @@ async def readiness_check():
         logger.error(f"Readiness check failed: {e}")
         return JSONResponse(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            content={"status": "not_ready", "error": str(e)}
+            content={"status": "not_ready", "error": "Readiness check failed"}
         )
 
 
