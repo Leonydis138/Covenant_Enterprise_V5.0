@@ -29,7 +29,7 @@ anthropic==0.18.1
 langchain==0.1.9
 langchain-openai==0.0.6
 langchain-anthropic==0.0.1
-llama-index==0.10.13
+llama-index==0.13.0
 
 # Vector Database
 qdrant-client==1.7.3
