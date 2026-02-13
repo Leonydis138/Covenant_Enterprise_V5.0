@@ -98,7 +98,7 @@ web3==6.15.1
 eth-account==0.11.0
 eth-utils==4.0.0
 py-evm==0.12.1b1
-ecdsa==0.18.0
+ecdsa==0.19.1
 pycryptodome==3.20.0
 
 # Graph Processing
