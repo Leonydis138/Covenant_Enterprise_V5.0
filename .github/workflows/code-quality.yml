@@ -1,0 +1,108 @@
+name: Code Quality
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly on Sundays
+
+jobs:
+  sonarcloud:
+    name: SonarCloud Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for better analysis
+      
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=covenant-enterprise-v6
+            -Dsonar.organization=covenant-ai
+            -Dsonar.python.coverage.reportPaths=backend/coverage.xml
+            -Dsonar.javascript.lcov.reportPaths=frontend/coverage/lcov.info
+
+  code-metrics:
+    name: Code Metrics & Complexity
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install tools
+        run: |
+          pip install radon mccabe
+      
+      - name: Calculate complexity
+        run: |
+          radon cc backend/src/ -a -s
+          radon mi backend/src/ -s
+      
+      - name: Generate metrics report
+        run: |
+          radon cc backend/src/ -a -j > backend-complexity.json
+          radon mi backend/src/ -j > backend-maintainability.json
+      
+      - name: Upload metrics
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-metrics
+          path: |
+            backend-complexity.json
+            backend-maintainability.json
+
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: moderate
+          deny-licenses: GPL-2.0, GPL-3.0
+
+  license-check:
+    name: License Compliance
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install pip-licenses
+        run: pip install pip-licenses
+      
+      - name: Check Python licenses
+        run: |
+          cd backend
+          pip install -r requirements.txt
+          pip-licenses --format=markdown --output-file=licenses.md
+      
+      - name: Upload license report
+        uses: actions/upload-artifact@v4
+        with:
+          name: license-report
+          path: backend/licenses.md
