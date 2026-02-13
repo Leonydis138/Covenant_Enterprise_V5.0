@@ -200,7 +200,7 @@ locust==2.20.1
 pytest-benchmark==4.0.0
 
 # Code Quality
-black==24.1.1
+black==24.3.0
 ruff==0.2.1
 mypy==1.8.0
 pylint==3.0.3
