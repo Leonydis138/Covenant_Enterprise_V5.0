@@ -83,7 +83,7 @@ aif360==0.6.0
 
 # NLP & Embeddings
 spacy==3.7.3
-nltk==3.8.1
+nltk==3.9
 gensim==4.3.2
 fasttext==0.9.2
 
