@@ -122,7 +122,7 @@ opensearch-py==2.4.2
 
 # GraphQL & gRPC
 strawberry-graphql[fastapi]==0.219.2
-graphene==3.3
+graphene==3.4.3
 ariadne==0.22.0
 grpcio==1.60.1
 grpcio-tools==1.60.1
