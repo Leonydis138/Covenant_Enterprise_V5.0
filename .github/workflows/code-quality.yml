@@ -57,7 +57,7 @@ jobs:
           radon mi backend/src/ -j > backend-maintainability.json
       
       - name: Upload metrics
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: code-metrics
           path: |
@@ -102,7 +102,7 @@ jobs:
           pip-licenses --format=markdown --output-file=licenses.md
       
       - name: Upload license report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: license-report
           path: backend/licenses.md
