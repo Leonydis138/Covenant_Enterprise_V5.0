@@ -26,7 +26,7 @@ pandas==2.2.1
 # LLM Integration
 openai==1.12.0
 anthropic==0.18.1
-langchain==0.1.9
+langchain==1.2.10
 langchain-openai==0.0.6
 langchain-anthropic==0.0.1
 llama-index==0.10.13
