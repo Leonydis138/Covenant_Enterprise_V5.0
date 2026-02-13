@@ -234,7 +234,7 @@ twilio==8.13.0
 
 # Workflow & State Machines
 temporalio==1.5.1
-prefect==2.16.1
+prefect==2.20.17
 
 # Geospatial
 geopy==2.4.1
