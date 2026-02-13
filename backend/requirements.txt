@@ -32,7 +32,7 @@ langchain-anthropic==0.0.1
 llama-index==0.14.14
 
 # Vector Database
-qdrant-client==1.7.3
+qdrant-client==1.9.0
 chromadb==0.4.22
 
 # Advanced ML
