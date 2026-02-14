@@ -85,7 +85,6 @@ scipy
 scikit-learn
 xgboost
 lightgbm
-catboost
 
 # Deep Learning
 tensorflow
@@ -268,4 +267,3 @@ newrelic==9.5.0
 # Additional Security
 oauthlib
 pynacl
-secrets
