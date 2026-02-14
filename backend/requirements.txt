@@ -184,7 +184,7 @@ statsd==4.0.1
 influxdb-client==1.40.0
 
 # Compliance & Audit
-audit-log==0.1.1
+# audit-log==0.1.1
 
 # Environment Management
 python-decouple==3.8
