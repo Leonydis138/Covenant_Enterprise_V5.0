@@ -118,70 +118,70 @@ ecdsa
 pycryptodome
 
 # Graph Processing
-neo4j==5.17.0
-py2neo==2021.2.3
+neo4j
+py2neo
 
 # Vector Databases
-pinecone-client==3.0.2
-chromadb==0.4.22
-weaviate-client==4.4.2
-qdrant-client==1.16.2
-milvus==2.3.5
+pinecone-client
+chromadb
+weaviate-client
+qdrant-client
+milvus
 
 # Time Series
-influxdb-client==1.39.0
-timescaledb==0.0.4
+influxdb-client
+timescaledb
 
 # Search
-elasticsearch==9.3.0
-opensearch-py==2.4.2
+elasticsearch
+opensearch-py
 
 # GraphQL & gRPC
-strawberry-graphql[fastapi]==0.219.2
-graphene==3.4.3
-ariadne==0.22.0
-grpcio==1.60.1
-grpcio-tools==1.60.1
-protobuf==6.33.5
+strawberry-graphql[fastapi]
+graphene
+ariadne
+grpcio
+grpcio-tools
+protobuf
 
 # HTTP & WebSocket
-httpx==0.26
-aiohttp==3.13.3
-websockets==12.0
-httpcore==1.0.2
-requests==2.32.5
+httpx
+aiohttp
+websockets
+httpcore
+requests
 
 # Data Validation & Serialization
-marshmallow==4.2.2
-cerberus==1.3.5
-jsonschema==4.21.1
-orjson==3.11.5
-msgpack==1.0.7
-pyarrow==15.0.0
+marshmallow
+cerberus
+jsonschema
+orjson
+msgpack
+pyarrow
 
 # Data Processing
-polars==0.20.7
-pandas==2.2.0
-dask==2024.2.0
-ray==2.53.0
+polars
+pandas
+dask
+ray
 
 # Image & Media
-pillow==12.1.1
-opencv-python==4.9.0.80
-imageio==2.33.1
+pillow
+opencv-python
+imageio
 
 # PDF & Documents
-pypdf==6.6.2
-reportlab==4.1.0
-weasyprint==68.0
-python-docx==1.1.0
-openpyxl==3.1.2
+pypdf
+reportlab
+weasyprint
+python-docx
+openpyxl
 
 # Cloud Services
-boto3==1.34.44
-google-cloud-storage==2.14.0
-azure-storage-blob==12.28.0
-minio==7.2.20
+boto3
+google-cloud-storage
+azure-storage-blob
+minio
 
 # Feature Flags & Config
 launchdarkly-server-sdk==9.2.1
@@ -190,13 +190,13 @@ environs==14.5.0
 dynaconf==3.2.4
 
 # Rate Limiting
-slowapi==0.1.9
-pyrate-limiter==4.0.2
+slowapi
+pyrate-limiter
 
 # Caching Strategies
 aiocache
 cachetools
-diskcache==5.6.3
+diskcache
 
 # API Documentation
 mkdocs==1.5.3
@@ -217,9 +217,9 @@ pytest-benchmark
 
 # Code Quality
 black==26.1.0
-ruff==0.2.1
-mypy==1.8.0
-pylint==3.0.3
+ruff
+mypy
+pylint
 bandit==1.7.7
 safety==3.0.1
 pre-commit==3.6.1
