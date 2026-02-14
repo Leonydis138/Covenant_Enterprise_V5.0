@@ -216,7 +216,7 @@ locust
 pytest-benchmark
 
 # Code Quality
-black==26.1.0
+# black
 ruff
 mypy
 pylint
