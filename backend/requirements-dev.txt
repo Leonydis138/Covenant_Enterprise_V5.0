@@ -18,7 +18,7 @@ locust
 # Core Framework (Latest Stable)
 fastapi[all]
 uvicorn[standard]
-pydantic
+# pydantic
 pydantic-settings
 starlette
 
