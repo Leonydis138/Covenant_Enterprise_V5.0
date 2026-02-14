@@ -17,7 +17,7 @@ asyncio==3.4.3
 # Core Framework
 fastapi[all]==0.129.0
 uvicorn[standard]==0.40.0
-pydantic==2.7.1
+pydantic
 pydantic-settings==2.1.0
 
 # Database
@@ -38,7 +38,7 @@ pandas==2.2.1
 
 # LLM Integration
 openai==1.12.0
-anthropic==0.18.1
+anthropic
 langchain==1.2.10
 langchain-openai==0.0.6
 langchain-anthropic==0.0.1
