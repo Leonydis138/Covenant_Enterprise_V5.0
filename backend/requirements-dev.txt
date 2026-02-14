@@ -18,7 +18,7 @@ locust
 # Core Framework (Latest Stable)
 fastapi[all]
 uvicorn[standard]
-# pydantic
+pydantic
 pydantic-settings
 starlette
 
@@ -249,12 +249,12 @@ sendgrid
 twilio
 
 # Workflow & State Machines
-temporalio==1.5.1
-prefect==3.6.17
+temporalio
+prefect
 
 # Geospatial
-geopy==2.4.1
-shapely==2.0.2
+geopy
+shapely
 
 # Financial & Crypto
 ccxt==4.2.25
