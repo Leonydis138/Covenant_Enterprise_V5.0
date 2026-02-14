@@ -2,6 +2,7 @@
 -r requirements.txt
 pyOpenSSL
 PyYAML==6.0.1
+package>=2.0.0
 
 # Testing
 pytest
@@ -17,7 +18,7 @@ mypy
 locust
 
 # Core Framework (Latest Stable)
-fastapi[all]
+fastapi
 uvicorn[standard]
 pydantic
 pydantic-settings
