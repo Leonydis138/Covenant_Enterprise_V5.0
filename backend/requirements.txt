@@ -15,7 +15,7 @@ asyncio
 # Python 3.12+ required
 
 # Core Framework
-fastapi[all]
+fastapi
 uvicorn[standard]
 pydantic
 pydantic-settings
