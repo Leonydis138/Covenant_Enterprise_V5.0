@@ -58,7 +58,6 @@ chromadb==0.4.22
 # Advanced ML
 xgboost==2.0.3
 lightgbm==4.6.0
-catboost==1.2.2
 optuna==3.5.0
 ray[default]==2.9.3
 
