@@ -166,20 +166,20 @@ orjson==3.11.5
 msgspec==0.20.0
 
 # Email
-fastapi-mail==1.6.1
-aiosmtplib==3.0.1
+fastapi-mail
+aiosmtplib
 
 # File Processing
-python-magic==0.4.27
-pillow==12.1.1
-PyPDF2==3.0.1
+python-magic
+pillow
+PyPDF2
 
 # Scheduling
-apscheduler==3.10.4
-croniter==2.0.2
+apscheduler
+croniter
 
 # Metrics & Analytics
-statsd==4.0.1
+statsd
 influxdb-client==1.40.0
 
 # Compliance & Audit
