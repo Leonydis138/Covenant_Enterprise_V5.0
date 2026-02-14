@@ -59,7 +59,7 @@ chromadb==0.4.22
 xgboost==2.0.3
 lightgbm==4.6.0
 optuna==3.5.0
-ray[default]==2.9.3
+# ray[default]==2.9.3
 
 # Explainability
 shap==0.44.1
