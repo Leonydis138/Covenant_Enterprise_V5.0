@@ -2,7 +2,7 @@
 -r requirements.txt
 pyOpenSSL
 PyYAML==6.0.1
-package>=2.0.0
+package
 
 # Testing
 pytest
