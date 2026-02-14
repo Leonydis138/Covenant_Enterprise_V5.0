@@ -2,6 +2,8 @@
 -r requirements.txt
 pyOpenSSL
 PyYAML==6.0.1
+fastapi>=0.100
+uvicorn[standard]>=0.23,<0.30
 
 # Testing
 pytest
@@ -17,8 +19,6 @@ mypy
 locust
 
 # Core Framework (Latest Stable)
-fastapi
-uvicorn[standard]
 pydantic
 pydantic-settings
 starlette
