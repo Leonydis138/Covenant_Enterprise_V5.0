@@ -1,7 +1,7 @@
 # Base requirements
 -r requirements.txt
 pyOpenSSL
-pyyaml
+PyYAML==6.0.1
 
 # Testing
 pytest
