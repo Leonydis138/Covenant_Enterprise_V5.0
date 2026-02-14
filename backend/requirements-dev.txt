@@ -1,6 +1,6 @@
 # Base requirements
 -r requirements.txt
-OpenSSL
+pyOpenSSL
 
 # Testing
 pytest
