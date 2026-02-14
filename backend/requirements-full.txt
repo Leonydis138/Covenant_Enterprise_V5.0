@@ -1,3 +1,19 @@
+# Base requirements
+-r requirements.txt
+
+# Testing
+pytest==8.0.2
+pytest-asyncio==0.23.5
+pytest-cov==4.1.0
+
+# Code Quality
+black==24.2.0
+flake8==7.0.0
+mypy==1.8.0
+
+# Performance Testing
+locust==2.23.1
+
 # Core Framework (Latest Stable)
 fastapi[all]==0.129.0
 uvicorn[standard]==0.40.0
