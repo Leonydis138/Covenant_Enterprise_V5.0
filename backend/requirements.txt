@@ -1,6 +1,6 @@
 # Python 3.12 safe core
 fastapi>=0.110
-uvicorn[standard]>=0.23,<0.30
+uvicorn[standard]>=0.23,<0.41
 
 pydantic>=2.6,<3
 pydantic-settings>=2.2
