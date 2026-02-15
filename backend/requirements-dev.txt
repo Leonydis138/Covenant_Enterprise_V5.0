@@ -1,13 +1,210 @@
-# ---- resolver guardrails ----
-urllib3>=2.6,<3
-packaging>=24,<25
-importlib-metadata>=6,<7
-pygments>=2.19,<3
-protobuf>=4.25,<6
-# ----------------------------
-
+# Base requirements
 -r requirements.txt
+pyOpenSSL
+PyYAML
+fastapi
+uvicorn
 
+# Testing
+pytest
+pytest-asyncio
+pytest-cov
+
+# Code Quality
+# black
+flake8
+mypy
+
+# Performance Testing
+locust
+
+# Core Framework (Latest Stable)
+pydantic
+pydantic-settings
+starlette
+
+# ASGI Servers & Performance
+uvloop
+httptools
+
+# Database Layer
+sqlalchemy[asyncio]
+alembic
+asyncpg
+psycopg2-binary
+databases[postgresql]
+
+# Advanced ORM
+sqlmodel
+tortoise-orm
+
+# Caching & Message Queue
+redis[hiredis]
+aioredis
+celery[redis]
+dramatiq[redis]
+rq
+
+# Task Scheduling
+apscheduler
+croniter
+
+# Authentication & Security
+python-jose[cryptography]
+passlib[bcrypt,argon2]
+PyJWT
+argon2-cffi
+bcrypt
+cryptography
+python-multipart
+itsdangerous
+
+# OAuth & SSO
+authlib
+python-social-auth
+
+# Monitoring & Observability
+prometheus-client
+opentelemetry-api
+opentelemetry-sdk
+opentelemetry-instrumentation-fastapi
+opentelemetry-instrumentation-sqlalchemy
+opentelemetry-instrumentation-redis
+opentelemetry-exporter-jaeger
+opentelemetry-exporter-prometheus
+sentry-sdk[fastapi]
+structlog
+python-json-logger
+
+# AI/ML Frameworks
+torch
+torchvision
+transformers
+sentence-transformers
+numpy
+scipy
+scikit-learn
+xgboost
+lightgbm
+
+# Deep Learning
+tensorflow
+jax
+flax
+
+# Explainability & Fairness
+shap
+lime
+fairlearn
+aif360
+
+# NLP & Embeddings
+spacy
+nltk
+gensim
+fasttext
+
+# Formal Verification
+z3-solver
+sympy
+networkx
+pulp
+
+# Blockchain & Crypto
+web3
+eth-account
+eth-utils
+py-evm
+ecdsa
+pycryptodome
+
+# Graph Processing
+neo4j
+py2neo
+
+# Vector Databases
+pinecone-client
+chromadb
+weaviate-client
+qdrant-client
+milvus
+
+# Time Series
+influxdb-client
+timescaledb
+
+# Search
+elasticsearch
+opensearch-py
+
+# GraphQL & gRPC
+strawberry-graphql[fastapi]
+graphene
+ariadne
+grpcio
+grpcio-tools
+protobuf
+
+# HTTP & WebSocket
+httpx
+aiohttp
+websockets
+httpcore
+requests
+
+# Data Validation & Serialization
+marshmallow
+cerberus
+jsonschema
+orjson
+msgpack
+pyarrow
+
+# Data Processing
+polars
+pandas
+dask
+ray
+
+# Image & Media
+pillow
+opencv-python
+imageio
+
+# PDF & Documents
+pypdf
+reportlab
+weasyprint
+python-docx
+openpyxl
+
+# Cloud Services
+boto3
+google-cloud-storage
+azure-storage-blob
+minio
+
+# Feature Flags & Config
+launchdarkly-server-sdk==9.2.1
+python-decouple==3.8
+environs==14.5.0
+dynaconf==3.2.4
+
+# Rate Limiting
+slowapi
+pyrate-limiter
+
+# Caching Strategies
+aiocache
+cachetools
+diskcache
+
+# API Documentation
+mkdocs
+mkdocs-material
+mkdocstrings[python]
+
+# Testing
 pytest
 pytest-asyncio
 pytest-cov
@@ -15,16 +212,59 @@ pytest-mock
 pytest-xdist
 hypothesis
 faker
+factory-boy
+locust
+pytest-benchmark
 
+# Code Quality
+# black
 ruff
 mypy
 pylint
 bandit==1.7.7
-pre-commit>=3.6
+safety==3.0.1
+pre-commit==3.6.1
+autopep8==2.0.4
 
-mkdocs>=1.5
-mkdocs-material>=9.5
-mkdocstrings[python]>=0.24
-
+# Type Stubs
 types-redis
 types-requests
+sqlalchemy[mypy]
+
+# Utilities
+python-dotenv
+click
+typer
+rich
+tabulate
+tqdm
+python-dateutil
+pytz
+arrow
+pendulum
+
+# Email & Notifications
+fastapi-mail
+jinja2
+sendgrid
+twilio
+
+# Workflow & State Machines
+temporalio
+prefect
+
+# Geospatial
+geopy
+shapely
+
+# Financial & Crypto
+ccxt==4.2.25
+stripe==14.3.0
+
+# Monitoring SDKs
+datadog==0.49.1
+newrelic==9.5.0
+
+# Additional Security
+oauthlib
+pynacl
