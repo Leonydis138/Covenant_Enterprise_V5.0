@@ -187,7 +187,7 @@ jobs:
           echo "backend_tags=${BRANCH_TAG}-${SHORT_SHA}" >> $GITHUB_OUTPUT
           echo "frontend_tags=${BRANCH_TAG}-${SHORT_SHA}" >> $GITHUB_OUTPUT
       - name: Build backend image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: backend
           push: false
@@ -197,7 +197,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Build frontend image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: frontend
           push: false
@@ -224,7 +224,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Push backend image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: backend
           push: true
@@ -233,7 +233,7 @@ jobs:
             ${{ secrets.DOCKER_USERNAME }}/covenant-backend:${{ github.ref_name }}
           cache-from: type=gha
       - name: Push frontend image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: frontend
           push: true
@@ -243,7 +243,7 @@ jobs:
           cache-from: type=gha
       - name: Push latest tag (main only)
         if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
