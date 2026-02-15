@@ -1,0 +1,83 @@
+version: '3.9'
+
+services:
+  api:
+    build: ./backend
+    image: covenant-ultimate:4.0.0
+    ports:
+      - "8000:8000"
+      - "50051:50051"
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql://covenant:covenant@db:5432/covenant
+      - REDIS_URL=redis://redis:6379
+      - ENABLE_GPU=true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+      - REACT_APP_WS_URL=ws://localhost:8000
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: covenant
+      POSTGRES_USER: covenant
+      POSTGRES_PASSWORD: covenant
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+
+  elasticsearch:
+    image: elasticsearch:8.11.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./infrastructure/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"
+      - "14268:14268"
+
+volumes:
+  postgres_data:
+  redis_data:
+  es_data:

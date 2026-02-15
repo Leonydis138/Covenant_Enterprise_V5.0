@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: covenant-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: covenant-api
+  template:
+    metadata:
+      labels:
+        app: covenant-api
+    spec:
+      containers:
+      - name: api
+        image: covenant-enterprise:3.0.0
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: covenant-secrets
+              key: database-url

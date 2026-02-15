@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: covenant-config
+data:
+  APP_ENV: "production"
+  ENABLE_QUANTUM_OPTIMIZATION: "true"
+  LOG_LEVEL: "INFO"
