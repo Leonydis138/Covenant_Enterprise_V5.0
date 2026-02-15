@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "build": "next build"
+  }
+}
+
+{
   "name": "covenant-enterprise-frontend",
   "version": "6.0.0",
   "description": "COVENANT.AI Enterprise Frontend - Next.js Dashboard",
