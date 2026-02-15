@@ -29,7 +29,7 @@ jobs:
     outputs:
       has_frontend: ${{ steps.check.outputs.has_frontend }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - id: check
         run: |
           if [ -f frontend/package.json ]; then
@@ -65,7 +65,7 @@ jobs:
         image: redis:7-alpine
         ports: [ "6379:6379" ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
@@ -105,7 +105,7 @@ jobs:
     needs: check-frontend
     if: needs.check-frontend.outputs.has_frontend == 'true'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -177,7 +177,7 @@ jobs:
       backend_tags: ${{ steps.docker-tags.outputs.backend_tags }}
       frontend_tags: ${{ steps.docker-tags.outputs.frontend_tags }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: docker/setup-buildx-action@v3
       - name: Set Docker tags
         id: docker-tags
@@ -216,7 +216,7 @@ jobs:
     needs: docker-build
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: docker/setup-buildx-action@v3
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -262,7 +262,7 @@ jobs:
     environment: staging
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Verify required secrets are set
         run: |
