@@ -82,7 +82,7 @@ jobs:
         env:
           DATABASE_URL: postgresql://test:test@localhost:5432/test_db
           REDIS_URL: redis://localhost:6379
-          PYTHONPATH: .                     # 👈 Fix: add current dir to Python path
+          PYTHONPATH: src                   # ✅ FIXED: Point to src directory where covenant module lives
         run: |
           pytest tests/ \
             --cov=src \
