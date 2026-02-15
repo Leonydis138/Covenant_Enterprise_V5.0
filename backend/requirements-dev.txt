@@ -1,7 +1,7 @@
 # ---- resolver guardrails ----
 urllib3>=2.6,<3
 packaging>=24,<25
-importlib-metadata>=6,<7
+importlib-metadata>=6,<9
 pygments>=2.19,<3
 protobuf>=4.25,<6
 # ----------------------------
