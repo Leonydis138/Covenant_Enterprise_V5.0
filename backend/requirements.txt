@@ -1,56 +1,88 @@
-# Python 3.12 safe core
-fastapi
-uvicorn
-pydantic
-pydantic-settings
-starlette
-sqlalchemy
-asyncpg
-psycopg2-binary
-redis
-hiredis
-httpx
-python-dotenv
-cryptography
-python-jose[cryptography]
-passlib[bcrypt]
-argon2-cffi
-python-multipart
-itsdangerous
-orjson
-msgpack
-python-dateutil
-pytz
-# Task queues (pick ONE in runtime)
-celery[redis]
-rq
-# Distributed compute (NOT CI)
-dask[complete]
-distributed
-ray
-# Vector DBs (choose per deployment)
-chromadb
-qdrant-client
-weaviate-client
-numpy
-pandas
-scikit-learn
-torch
-transformers
-sentence-transformers
-xgboost
-lightgbm
-optuna
-shap
-lime
-fairlearn
-prometheus-client
-opentelemetry-api
-opentelemetry-sdk>=1.22
-opentelemetry-instrumentation-fastapi>=0.44b0
-opentelemetry-instrumentation-sqlalchemy
-opentelemetry-instrumentation-redis
+# Core Framework
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.6.0
+pydantic-settings>=2.1.0
 
-sentry-sdk[fastapi]
-structlog
-python-json-logger
+# Database
+sqlalchemy>=2.0.25
+asyncpg>=0.29.0
+alembic>=1.13.1
+psycopg2-binary>=2.9.9
+
+# Cache & Message Queue
+redis>=5.0.1
+hiredis>=2.3.2
+
+# Authentication & Security
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+argon2-cffi>=23.1.0
+python-multipart>=0.0.9
+itsdangerous>=2.1.2
+cryptography>=42.0.0
+
+# Serialization
+orjson>=3.10.0
+msgpack>=1.0.8
+pyyaml>=6.0.1
+
+# Date & Time
+python-dateutil>=2.9.0
+pytz>=2024.1
+
+# AI/ML Core
+numpy>=1.26.4
+pandas>=2.2.0
+scikit-learn>=1.4.0
+
+# Deep Learning
+torch>=2.2.0
+transformers>=4.38.0
+sentence-transformers>=2.5.0
+
+# Boosting
+xgboost>=2.0.3
+lightgbm>=4.3.0
+optuna>=3.6.0
+
+# Explainability
+shap>=0.45.0
+lime>=0.2.0.1
+fairlearn>=0.10.0
+
+# Formal Verification
+z3-solver>=4.12.6.0
+
+# Monitoring
+prometheus-client>=0.20.0
+opentelemetry-api>=1.22.0
+opentelemetry-sdk>=1.22.0
+opentelemetry-instrumentation-fastapi>=0.44b0
+opentelemetry-instrumentation-sqlalchemy>=0.44b0
+
+# Logging
+python-json-logger>=2.0.7
+
+# HTTP Client
+httpx>=0.27.0
+aiohttp>=3.9.3
+
+# Task Queue (choose one)
+celery[redis]>=5.3.6
+
+# Testing (dev)
+pytest>=8.0.0
+pytest-asyncio>=0.23.5
+pytest-cov>=4.1.0
+pytest-mock>=3.14.0
+pytest-xdist>=3.5.0
+faker>=24.0.0
+hypothesis>=6.98.0
+
+# Code Quality (dev)
+black>=24.2.0
+flake8>=7.0.0
+mypy>=1.8.0
+isort>=5.13.2
+bandit>=1.7.7
