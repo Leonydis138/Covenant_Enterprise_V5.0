@@ -24,12 +24,10 @@ pytz
 # Task queues (pick ONE in runtime)
 celery[redis]
 rq
-
 # Distributed compute (NOT CI)
 dask[complete]
 distributed
 ray
-
 # Vector DBs (choose per deployment)
 chromadb
 qdrant-client
