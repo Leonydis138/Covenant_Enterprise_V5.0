@@ -1,12 +1,21 @@
-FROM node:25-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
+# Copy package files
 COPY package*.json ./
-RUN npm ci --silent
 
+# Install dependencies with legacy peer deps to handle conflicts
+RUN npm install --legacy-peer-deps --silent
+
+# Copy application code
 COPY . .
 
-EXPOSE 5173
+# Build the application
+RUN npm run build
 
-CMD ["npm", "run", "dev", "--", "--host"]
+# Expose port
+EXPOSE 3000
+
+# Start the application
+CMD ["npm", "start"]
