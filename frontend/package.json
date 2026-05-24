@@ -30,7 +30,7 @@
     "typescript": "^5.7.2",
     "eslint": "^10.0.3",
     "tailwindcss": "^4.2.1",
-    "postcss": "^8.4.49",
+    "postcss": "^8.5.15",
     "autoprefixer": "^10.4.20"
   }
 }
