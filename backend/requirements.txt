@@ -1,14 +1,14 @@
 # Core Framework
-fastapi>=0.110.0
-uvicorn[standard]>=0.27.0
+fastapi>=0.136.1
+uvicorn[standard]>=0.47.0
 pydantic>=2.6.0
 pydantic-settings>=2.1.0
 
 # Database
-sqlalchemy>=2.0.25
+sqlalchemy>=2.0.49
 asyncpg>=0.29.0
-alembic>=1.13.1
-psycopg2-binary>=2.9.9
+alembic>=1.18.4
+psycopg2-binary>=2.9.12
 
 # Cache & Message Queue
 redis>=5.0.1
@@ -29,7 +29,7 @@ pyyaml>=6.0.1
 
 # Date & Time
 python-dateutil>=2.9.0
-pytz>=2024.1
+pytz>=2026.2
 
 # AI/ML Core - Use specific versions that have wheels
 numpy>=1.26.0,<3.0.0
@@ -38,8 +38,8 @@ scikit-learn>=1.4.0
 scipy>=1.11.0
 
 # Deep Learning - Optional, can be heavy
-torch>=2.2.0
-transformers>=4.38.0
+torch>=2.12.0
+transformers>=5.8.1
 sentence-transformers>=2.5.0
 
 # Boosting
