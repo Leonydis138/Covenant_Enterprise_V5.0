@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Layout from './components/Layout'
+import LoadingScreen from './components/LoadingScreen'
 
 const Dashboard = lazy(() => import('./pages/Dashboard'))
 const Evaluator = lazy(() => import('./pages/Evaluator'))
@@ -16,7 +17,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Layout>
-          <Suspense fallback={<div className="p-8 text-sm text-gray-400">Loading page...</div>}>
+          <Suspense fallback={<LoadingScreen />}>
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/evaluate" element={<Evaluator />} />
