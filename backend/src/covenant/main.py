@@ -42,7 +42,10 @@ constitutional_engine = None
 async def lifespan(app: FastAPI):
     """Application lifespan manager"""
     global constitutional_engine
-    
+
+    app.state.started_at = datetime.now(timezone.utc)
+    app.state.db_available = True
+
     logger.info("🚀 Starting COVENANT.AI Enterprise v5.0")
     
     # Initialize database (non-fatal if unavailable - runs in degraded mode)
@@ -128,17 +131,32 @@ async def global_exception_handler(request: Request, exc: Exception):
 @app.get("/health", tags=["Health"])
 async def health_check():
     """Health check endpoint"""
+    now = datetime.now(timezone.utc)
+    started_at = getattr(app.state, "started_at", now)
+    db_available = bool(getattr(app.state, "db_available", False))
+    status_value = "healthy" if db_available else "degraded"
+
     return {
-        "status": "healthy",
+        "status": status_value,
         "version": "5.0.0",
         "tier": "enterprise",
-        "timestamp": str(datetime.now(timezone.utc))
+        "timestamp": str(now),
+        "uptime_seconds": max(0, int((now - started_at).total_seconds())),
+        "checks": {
+            "database": "ok" if db_available else "unavailable"
+        }
     }
 
 
 @app.get("/health/ready", tags=["Health"])
 async def readiness_check():
     """Readiness check for Kubernetes"""
+    if not getattr(app.state, "db_available", False):
+        return JSONResponse(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            content={"status": "not_ready", "checks": {"database": "unavailable"}},
+        )
+
     try:
         # Check database
         async with db_engine.begin() as conn:
