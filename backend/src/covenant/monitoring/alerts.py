@@ -1,7 +1,7 @@
 """Alerting System for Critical Events"""
 from typing import Dict, Any, List, Optional
 from enum import Enum
-from datetime import datetime
+from datetime import datetime, timezone
 import logging
 
 logger = logging.getLogger(__name__)
@@ -24,12 +24,12 @@ class Alert:
     
     def __init__(self, title: str, message: str, severity: AlertSeverity,
                  metadata: Optional[Dict[str, Any]] = None):
-        self.id = str(datetime.utcnow().timestamp())
+        self.id = str(datetime.now(timezone.utc).timestamp())
         self.title = title
         self.message = message
         self.severity = severity
         self.metadata = metadata or {}
-        self.timestamp = datetime.utcnow()
+        self.timestamp = datetime.now(timezone.utc)
         self.acknowledged = False
 
 class AlertingSystem:

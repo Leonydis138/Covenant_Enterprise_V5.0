@@ -6,7 +6,7 @@ Production-ready FastAPI application with advanced features
 import logging
 import sys
 from contextlib import asynccontextmanager
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any
 
 from fastapi import FastAPI, Request, status
@@ -18,6 +18,7 @@ from fastapi.exception_handlers import http_exception_handler
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from prometheus_client import make_asgi_app
 import uvicorn
+from sqlalchemy import text
 
 from covenant.api import routes
 from covenant.api import enterprise_routes
@@ -132,7 +133,7 @@ async def health_check():
         "status": "healthy",
         "version": "3.0.0",
         "tier": "enterprise",
-        "timestamp": str(datetime.utcnow())
+        "timestamp": str(datetime.now(timezone.utc))
     }
 
 

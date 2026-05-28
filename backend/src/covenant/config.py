@@ -122,7 +122,7 @@ class Settings(BaseSettings):
     """Master settings"""
     # App
     app_name: str = "COVENANT.AI Enterprise"
-    app_version: str = "4.0.0"
+    app_version: str = "5.0.0"
     environment: str = "development"
     debug: bool = True
     

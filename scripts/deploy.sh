@@ -3,20 +3,25 @@
 
 set -e
 
-echo "🚀 Deploying COVENANT.AI Enterprise v3.0"
-echo "========================================"
+#!/bin/bash
+# Production deployment script - COVENANT.AI Enterprise v5.0
+
+set -euo pipefail
+
+echo "🚀 Deploying COVENANT.AI Enterprise v5.0"
+echo "=========================================="
 
 # Build images
 echo "Building Docker images..."
-docker-compose -f docker-compose.full.yml build
+docker compose -f docker-compose.yml build
 
 # Tag images
 echo "Tagging images..."
-docker tag covenant-api:latest gcr.io/your-project/covenant-api:3.0.0
+docker tag covenant-enterprise-backend:latest "${REGISTRY:-gcr.io}/covenant-api:5.0.0"
 
 # Push to registry
 echo "Pushing to registry..."
-docker push gcr.io/your-project/covenant-api:3.0.0
+docker push "${REGISTRY:-gcr.io}/covenant-api:5.0.0"
 
 # Deploy to Kubernetes
 echo "Deploying to Kubernetes..."

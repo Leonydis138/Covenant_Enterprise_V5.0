@@ -1,10 +1,10 @@
 #!/bin/bash
-# Quick start script for COVENANT.AI Enterprise
+# Quick start script for COVENANT.AI Enterprise v5.0
 
-set -e
+set -euo pipefail
 
-echo "🚀 COVENANT.AI Enterprise v3.0 Quick Start"
-echo "=========================================="
+echo "🚀 COVENANT.AI Enterprise v5.0 Quick Start"
+echo "============================================"
 
 # Check prerequisites
 echo "Checking prerequisites..."
@@ -22,7 +22,7 @@ fi
 
 # Start services
 echo "Starting services with Docker Compose..."
-docker-compose -f docker-compose.full.yml up -d db redis
+docker compose -f docker-compose.yml up -d db redis
 sleep 5
 
 # Install backend dependencies
@@ -41,12 +41,11 @@ echo ""
 echo "✅ Setup complete!"
 echo ""
 echo "Next steps:"
-echo "  1. Start backend:  cd backend && uvicorn covenant.main:app --reload"
+echo "  1. Start backend:  cd backend && uvicorn src.covenant.main:app --reload --host 0.0.0.0 --port 8000"
 echo "  2. Start frontend: cd frontend && npm run dev"
 echo ""
 echo "Access points:"
-echo "  - API:       http://localhost:8000"
-echo "  - Docs:      http://localhost:8000/api/docs"
-echo "  - Dashboard: http://localhost:5173"
-echo "  - Metrics:   http://localhost:9090"
+echo "  - API Docs:    http://localhost:8000/api/docs"
+echo "  - Dashboard:   http://localhost:5000"
+echo "  - Metrics:     http://localhost:9090"
 echo ""

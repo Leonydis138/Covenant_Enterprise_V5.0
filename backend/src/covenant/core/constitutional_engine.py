@@ -10,7 +10,7 @@ import hashlib
 from typing import Dict, List, Any, Optional, Tuple, Set
 from dataclasses import dataclass, field
 from enum import Enum
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import uuid
 import json
 from collections import defaultdict
@@ -75,7 +75,7 @@ class Constraint:
     dependencies: List[str] = field(default_factory=list)  # Other constraint IDs
     exemptions: List[str] = field(default_factory=list)  # Exemption conditions
     metadata: Dict[str, Any] = field(default_factory=dict)
-    created_at: datetime = field(default_factory=datetime.utcnow)
+    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
@@ -102,7 +102,7 @@ class Action:
     target: Optional[str] = None
     parameters: Dict[str, Any] = field(default_factory=dict)
     context: Dict[str, Any] = field(default_factory=dict)
-    timestamp: datetime = field(default_factory=datetime.utcnow)
+    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
@@ -127,7 +127,7 @@ class Violation:
     confidence: float = 1.0
     evidence: Dict[str, Any] = field(default_factory=dict)
     remediation: Optional[str] = None
-    timestamp: datetime = field(default_factory=datetime.utcnow)
+    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
@@ -155,7 +155,7 @@ class EvaluationResult:
     proof_chain: List[str] = field(default_factory=list)
     audit_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     metadata: Dict[str, Any] = field(default_factory=dict)
-    timestamp: datetime = field(default_factory=datetime.utcnow)
+    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
@@ -712,7 +712,7 @@ class AdvancedConstitutionalEngine:
         Evaluate an action through all constitutional layers.
         Returns comprehensive evaluation result.
         """
-        start_time = datetime.utcnow()
+        start_time = datetime.now(timezone.utc)
         self.metrics['total_evaluations'] += 1
         
         layer_results = []
@@ -751,7 +751,7 @@ class AdvancedConstitutionalEngine:
             proof_chain = await self._generate_proof_chain(action, layer_results)
             
             # Calculate latency
-            end_time = datetime.utcnow()
+            end_time = datetime.now(timezone.utc)
             latency_ms = (end_time - start_time).total_seconds() * 1000
             
             # Update metrics
@@ -834,7 +834,7 @@ class AdvancedConstitutionalEngine:
         
         return {
             'provider': 'COVENANT.AI Enterprise v3.0',
-            'timestamp': datetime.utcnow().isoformat(),
+            'timestamp': datetime.now(timezone.utc).isoformat(),
             'bundle': bundle or 'all',
             'compliance_score': (total - violations) / total * 100 if total > 0 else 100,
             'total_evaluations': total,

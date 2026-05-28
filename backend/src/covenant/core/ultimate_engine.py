@@ -20,7 +20,7 @@ import logging
 from typing import Dict, List, Any, Optional, Tuple, Set, Callable
 from dataclasses import dataclass, field
 from enum import Enum
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import uuid
 import json
 import hashlib
@@ -126,7 +126,7 @@ class SwarmAgent:
             "agent_id": self.id,
             "result": "processed",
             "task": task,
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now(timezone.utc).isoformat()
         }
 
 
@@ -237,7 +237,7 @@ class UltimateConstitutionalEngine:
         Returns:
             Comprehensive evaluation result with proofs and guarantees
         """
-        start_time = datetime.utcnow()
+        start_time = datetime.now(timezone.utc)
         self.metrics["total_evaluations"] += 1
         
         try:
@@ -288,7 +288,7 @@ class UltimateConstitutionalEngine:
             
             # Execution time
             execution_time_ms = (
-                datetime.utcnow() - start_time
+                datetime.now(timezone.utc) - start_time
             ).total_seconds() * 1000
             
             return {
@@ -304,7 +304,7 @@ class UltimateConstitutionalEngine:
                 "execution_time_ms": execution_time_ms,
                 "privacy_budget_remaining": self.privacy_budget.remaining(),
                 "meta_learning_applied": True,
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
                 "engine_version": self.version
             }
             
@@ -332,7 +332,7 @@ class UltimateConstitutionalEngine:
             task = {
                 "action": action,
                 "agent_role": agent.role,
-                "timestamp": datetime.utcnow().isoformat()
+                "timestamp": datetime.now(timezone.utc).isoformat()
             }
             tasks.append(agent.process(task))
         
@@ -402,7 +402,7 @@ class UltimateConstitutionalEngine:
             )
         
         # Perform intervention analysis
-        intervention = {"action": action["type"], "timestamp": datetime.utcnow()}
+        intervention = {"action": action["type"], "timestamp": datetime.now(timezone.utc)}
         outcome = self.constraint_graph.do_calculus(intervention)
         
         return {
@@ -483,7 +483,7 @@ class UltimateConstitutionalEngine:
             statement=f"Action {action.get('id')} complies with all constraints",
             proof_method="zk-SNARK",
             verification_level=VerificationLevel.FORMAL,
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(timezone.utc),
             hash_chain=hash_chain,
             zero_knowledge_proof=zk_proof,
             formal_proof="∀x. P(x) → Q(x)"  # Simulated formal proof
@@ -500,7 +500,7 @@ class UltimateConstitutionalEngine:
         experience = {
             "action": action,
             "results": results,
-            "timestamp": datetime.utcnow()
+            "timestamp": datetime.now(timezone.utc)
         }
         self.adaptation_history.append(experience)
         

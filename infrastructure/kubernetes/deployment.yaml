@@ -2,6 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: covenant-api
+  labels:
+    app: covenant-api
+    version: "5.0.0"
 spec:
   replicas: 3
   selector:
@@ -11,15 +14,50 @@ spec:
     metadata:
       labels:
         app: covenant-api
+        version: "5.0.0"
     spec:
       containers:
       - name: api
-        image: covenant-enterprise:3.0.0
+        image: covenant-enterprise:5.0.0
+        imagePullPolicy: Always
         ports:
         - containerPort: 8000
+          name: http
+        - containerPort: 9090
+          name: metrics
         env:
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
               name: covenant-secrets
               key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: covenant-secrets
+              key: redis-url
+        - name: APP_ENV
+          value: "production"
+        - name: DEBUG
+          value: "false"
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+          limits:
+            cpu: "2000m"
+            memory: "4Gi"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /health/ready
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3

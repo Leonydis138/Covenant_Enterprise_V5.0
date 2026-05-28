@@ -9,7 +9,7 @@ import json
 import os
 import time
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 import numpy as np
@@ -207,7 +207,7 @@ class QuantumEthicalEngine:
         mode_label = "LIVE — Claude Sonnet 4" if self.live else "DEMO — add ANTHROPIC_API_KEY"
         return EvaluationResponse(
             evaluation_id=evaluation_id,
-            timestamp=datetime.utcnow().isoformat(),
+            timestamp=datetime.now(timezone.utc).isoformat(),
             query=query,
             composite_verdict=composite,
             composite_score=composite_score,

@@ -8,6 +8,7 @@ from pydantic import BaseModel, Field
 from datetime import datetime, timezone, timedelta
 from typing import Optional
 import jwt
+import os
 from passlib.context import CryptContext
 import logging
 
@@ -150,36 +151,44 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()) -> Token:
     """
     try:
         logger.info(f"Login attempt for user: {form_data.username}")
-        
-        # TODO: Replace with database query
-        # user = await get_user_from_db(form_data.username)
-        # For development only - use environment variable for credentials
-        if settings.APP_ENV == "development":
-            if (form_data.username == "admin" and
-                form_data.password == settings.SECRET_KEY):
-                pass
-            else:
-                raise ValueError("Invalid credentials")
-        else:
-            # Production: must fetch from database
-            raise NotImplementedError(
-                "Production login requires database integration"
+
+        # Use AUTH_USERNAME / AUTH_PASSWORD_HASH environment variables for credential verification
+        admin_user = os.environ.get("AUTH_USERNAME", "admin")
+        admin_password = os.environ.get("ADMIN_PASSWORD", "")
+        stored_hash = os.environ.get("AUTH_PASSWORD_HASH", "")
+
+        if not admin_password and not stored_hash:
+            logger.error("ADMIN_PASSWORD / AUTH_PASSWORD_HASH environment variable not set")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Authentication is not configured"
             )
-        
-        # Verify password
-        # if not verify_password(form_data.password, user.hashed_password):
-        #     logger.warning(f"Invalid password for user: {form_data.username}")
-        #     raise HTTPException(
-        #         status_code=status.HTTP_401_UNAUTHORIZED,
-        #         detail="Invalid credentials"
-        #     )
-        
+
+        if form_data.username != admin_user:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid credentials"
+            )
+
+        # Verify password using bcrypt if hash available, otherwise direct comparison
+        if stored_hash:
+            if not verify_password(form_data.password, stored_hash):
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Invalid credentials"
+                )
+        elif form_data.password != admin_password:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid credentials"
+            )
+
         access_token = create_access_token(
             data={"sub": form_data.username}
         )
-        
+
         logger.info(f"Successful login for user: {form_data.username}")
-        
+
         return Token(
             access_token=access_token,
             token_type="bearer",

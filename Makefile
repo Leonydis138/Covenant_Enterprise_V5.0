@@ -1,9 +1,9 @@
-# COVENANT.AI Enterprise Makefile
+# COVENANT.AI Enterprise v5.0 Makefile
 
-.PHONY: help install dev test clean build deploy
+.PHONY: help install dev test build deploy clean
 
 help:
-	@echo "COVENANT.AI Enterprise v3.0 - Available commands:"
+	@echo "COVENANT.AI Enterprise v5.0 - Available commands:"
 	@echo "  make install    - Install all dependencies"
 	@echo "  make dev        - Start development environment"
 	@echo "  make test       - Run all tests"
@@ -19,17 +19,17 @@ install:
 
 dev:
 	@echo "Starting development environment..."
-	docker-compose -f docker-compose.full.yml up
+	docker compose -f docker-compose.yml up
 
 test:
 	@echo "Running backend tests..."
-	cd backend && pytest -v --cov
+	cd backend && python -m pytest -v --cov
 	@echo "Running frontend tests..."
 	cd frontend && npm test
 
 build:
 	@echo "Building Docker images..."
-	docker-compose -f docker-compose.full.yml build
+	docker compose -f docker-compose.yml build
 
 deploy:
 	@echo "Deploying to production..."
@@ -37,7 +37,7 @@ deploy:
 
 clean:
 	@echo "Cleaning build artifacts..."
-	find . -type d -name "__pycache__" -exec rm -rf {} +
-	find . -type d -name "node_modules" -exec rm -rf {} +
-	find . -type d -name "dist" -exec rm -rf {} +
-	find . -type f -name "*.pyc" -delete
+	find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+	find . -type d -name "node_modules" -exec rm -rf {} + 2>/dev/null || true
+	find . -type d -name "dist" -exec rm -rf {} + 2>/dev/null || true
+	find . -type f -name "*.pyc" -delete 2>/dev/null || true

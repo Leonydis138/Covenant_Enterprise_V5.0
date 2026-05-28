@@ -13,7 +13,7 @@ from typing import List, Optional
 import asyncio
 
 from covenant.core.ultimate_engine import create_ultimate_engine, VerificationLevel
-from covenant.config import settings
+from covenant.utils.config import settings
 
 # GraphQL Schema
 @strawberry.type

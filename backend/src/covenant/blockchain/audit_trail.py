@@ -2,7 +2,7 @@
 import hashlib
 import json
 from typing import Dict, Any, List
-from datetime import datetime
+from datetime import datetime, timezone
 
 class Block:
     """Blockchain block"""
@@ -43,7 +43,7 @@ class AuditBlockchain:
     
     def create_genesis_block(self):
         """Create the first block"""
-        genesis = Block(0, datetime.utcnow().isoformat(), 
+        genesis = Block(0, datetime.now(timezone.utc).isoformat(), 
                        {"genesis": True}, "0")
         self.chain.append(genesis)
     
@@ -52,7 +52,7 @@ class AuditBlockchain:
         previous_block = self.chain[-1]
         new_block = Block(
             index=len(self.chain),
-            timestamp=datetime.utcnow().isoformat(),
+            timestamp=datetime.now(timezone.utc).isoformat(),
             data=audit_data,
             previous_hash=previous_block.hash
         )

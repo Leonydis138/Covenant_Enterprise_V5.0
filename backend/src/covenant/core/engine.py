@@ -7,7 +7,7 @@ import asyncio
 import logging
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 import uuid
 import hashlib
@@ -34,7 +34,7 @@ class Action:
     actor: str = "system"
     parameters: Dict[str, Any] = field(default_factory=dict)
     context: Dict[str, Any] = field(default_factory=dict)
-    timestamp: datetime = field(default_factory=datetime.utcnow)
+    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 @dataclass
@@ -143,7 +143,7 @@ class UltimateEngine:
         Returns:
             Comprehensive evaluation result
         """
-        start_time = datetime.utcnow()
+        start_time = datetime.now(timezone.utc)
         self.metrics["total_evaluations"] += 1
         
         try:
@@ -173,7 +173,7 @@ class UltimateEngine:
                 self.metrics["denied"] += 1
             
             # Calculate execution time
-            execution_time = (datetime.utcnow() - start_time).total_seconds() * 1000
+            execution_time = (datetime.now(timezone.utc) - start_time).total_seconds() * 1000
             self.metrics["average_latency_ms"] = (
                 (self.metrics["average_latency_ms"] * (self.metrics["total_evaluations"] - 1) 
                  + execution_time) / self.metrics["total_evaluations"]

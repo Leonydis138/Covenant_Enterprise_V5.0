@@ -26,7 +26,7 @@ class Settings(BaseSettings):
 
     SECRET_KEY: str = "change-me-in-production-use-env-var"
     JWT_SECRET: str = "jwt-secret-change-in-production"
-    JWT_ALGORITHM: str = "HS256"
+    JWT_ALGORITHM: str = "HS512"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
     CORS_ORIGINS: List[str] = ["*"]
