@@ -4,7 +4,6 @@ Production-ready FastAPI application with advanced features
 """
 
 import logging
-import sys
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from typing import Any
@@ -46,13 +45,13 @@ async def lifespan(app: FastAPI):
     
     logger.info("🚀 Starting COVENANT.AI Enterprise v3.0")
     
-    # Initialize database
+    # Initialize database (non-fatal if unavailable - runs in degraded mode)
     try:
         await init_db()
         logger.info("✓ Database initialized")
     except Exception as e:
-        logger.error(f"✗ Database initialization failed: {e}")
-        sys.exit(1)
+        logger.warning(f"⚠ Database unavailable (running in degraded mode): {e}")
+        app.state.db_available = False
     
     # Initialize constitutional engine
     constitutional_engine = create_engine({
