@@ -35,6 +35,10 @@ class Settings(BaseSettings):
     ENABLE_QUANTUM_OPTIMIZATION: bool = False
     ENABLE_BLOCKCHAIN: bool = False
 
+    RATE_LIMIT_ENABLED: bool = True
+    RATE_LIMIT_WINDOW_SECONDS: int = 60
+    RATE_LIMIT_MAX_REQUESTS: int = 300
+
     class Config:
         env_file = ".env"
         extra = "ignore"

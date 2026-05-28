@@ -7,6 +7,7 @@ import logging
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from typing import Any
+from time import time
 from uuid import uuid4
 
 from fastapi import FastAPI, Request, status
@@ -37,6 +38,7 @@ logger = logging.getLogger(__name__)
 
 # Global engine instance
 constitutional_engine = None
+rate_limit_store: dict[str, tuple[float, int]] = {}
 
 
 @asynccontextmanager
@@ -122,6 +124,40 @@ async def security_headers_middleware(request: Request, call_next):
     response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
     if settings.APP_ENV == "production":
         response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    return response
+
+
+@app.middleware("http")
+async def rate_limit_middleware(request: Request, call_next):
+    """Simple in-memory rate limiter for baseline abuse protection."""
+    if not settings.RATE_LIMIT_ENABLED:
+        return await call_next(request)
+
+    path = request.url.path
+    if path.startswith("/health") or path.startswith("/metrics"):
+        return await call_next(request)
+
+    now = time()
+    ip = request.client.host if request.client else "unknown"
+    window_start, count = rate_limit_store.get(ip, (now, 0))
+    if now - window_start > settings.RATE_LIMIT_WINDOW_SECONDS:
+        window_start, count = now, 0
+
+    count += 1
+    rate_limit_store[ip] = (window_start, count)
+
+    remaining = settings.RATE_LIMIT_MAX_REQUESTS - count
+    if count > settings.RATE_LIMIT_MAX_REQUESTS:
+        retry_after = max(1, int(settings.RATE_LIMIT_WINDOW_SECONDS - (now - window_start)))
+        return JSONResponse(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            content={"detail": "Rate limit exceeded", "type": "rate_limit_exceeded"},
+            headers={"Retry-After": str(retry_after)},
+        )
+
+    response = await call_next(request)
+    response.headers["X-RateLimit-Limit"] = str(settings.RATE_LIMIT_MAX_REQUESTS)
+    response.headers["X-RateLimit-Remaining"] = str(max(0, remaining))
     return response
 
 

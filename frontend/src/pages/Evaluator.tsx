@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Zap, Eye, GitBranch, Shield, Brain, CheckCircle, XCircle, AlertTriangle, Loader2, Send } from 'lucide-react'
+import { fetchJson } from '@/lib/api'
 
 interface AgentResult {
   agent_id: string
@@ -86,13 +87,10 @@ export default function Evaluator() {
     setFinalResult(null)
     setError(null)
     try {
-      const res = await fetch('/api/quantum_evaluate', {
+      const data = await fetchJson<EvalResult>('/api/quantum_evaluate', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: query, strictness: 'ultimate' }),
       })
-      if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      const data: EvalResult = await res.json()
       setFinalResult(data)
       const agentMap: Record<string, { result: Record<string, unknown>; latency_ms: number }> = {}
       data.agent_results.forEach(a => { agentMap[a.agent_id] = { result: a.result, latency_ms: a.latency_ms } })

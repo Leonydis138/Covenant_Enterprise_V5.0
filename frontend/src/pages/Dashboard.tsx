@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Activity, Shield, Brain, GitBranch, Eye, TrendingUp } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
+import { fetchJson } from '@/lib/api'
 
 const AXIOMS = [
   { id: 'observer_rights', label: 'Observer Rights', desc: "No action may remove an observer's ability to observe or act.", roman: 'I' },
@@ -32,13 +33,13 @@ export default function Dashboard() {
 
   const { data: health } = useQuery({
     queryKey: ['health'],
-    queryFn: () => fetch('/health').then(r => r.json()),
+    queryFn: () => fetchJson<Record<string, unknown>>('/health', { method: 'GET' }),
     refetchInterval: 10000,
   })
 
   const { data: agentInfo } = useQuery({
     queryKey: ['agents'],
-    queryFn: () => fetch('/api/agents').then(r => r.json()),
+    queryFn: () => fetchJson<Record<string, unknown>>('/api/agents', { method: 'GET' }),
     refetchInterval: 30000,
   })
 
