@@ -1,6 +1,6 @@
 """
-COVENANT.AI Enterprise v3.0 - Main Application
-Production-ready FastAPI application with advanced features
+COVENANT.AI Enterprise v5.0 - Main Application
+Production-ready FastAPI application with advanced constitutional AI features.
 """
 
 import logging
@@ -43,7 +43,7 @@ async def lifespan(app: FastAPI):
     """Application lifespan manager"""
     global constitutional_engine
     
-    logger.info("🚀 Starting COVENANT.AI Enterprise v3.0")
+    logger.info("🚀 Starting COVENANT.AI Enterprise v5.0")
     
     # Initialize database (non-fatal if unavailable - runs in degraded mode)
     try:
@@ -80,8 +80,8 @@ async def lifespan(app: FastAPI):
 # Create FastAPI application
 app = FastAPI(
     title="COVENANT.AI Enterprise",
-    description="Constitutional Alignment Framework for Autonomous Intelligence v3.0",
-    version="3.0.0",
+    description="Constitutional Alignment Framework for Autonomous Intelligence v5.0",
+    version="5.0.0",
     lifespan=lifespan,
     docs_url="/api/docs",
     redoc_url="/api/redoc",
@@ -130,7 +130,7 @@ async def health_check():
     """Health check endpoint"""
     return {
         "status": "healthy",
-        "version": "3.0.0",
+        "version": "5.0.0",
         "tier": "enterprise",
         "timestamp": str(datetime.now(timezone.utc))
     }
@@ -158,7 +158,7 @@ async def root():
     """Root endpoint with API information"""
     return {
         "name": "COVENANT.AI Enterprise",
-        "version": "3.0.0",
+        "version": "5.0.0",
         "description": "Constitutional Alignment Framework for Autonomous Intelligence",
         "features": [
             "Multi-layer constitutional verification",
