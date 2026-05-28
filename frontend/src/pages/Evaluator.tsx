@@ -63,6 +63,12 @@ function ScoreBar({ score }: { score: number }) {
   )
 }
 
+function resultText(result: Record<string, unknown> | undefined, key: string): string | null {
+  const value = result?.[key]
+  if (value === undefined || value === null || value === '') return null
+  return typeof value === 'string' ? value : JSON.stringify(value)
+}
+
 export default function Evaluator() {
   const [query, setQuery] = useState('')
   const [loading, setLoading] = useState(false)
@@ -123,7 +129,14 @@ export default function Evaluator() {
     ws.onclose = () => setLoading(false)
   }
 
-  const run = () => { if (!query.trim()) return; mode === 'http' ? runHttp() : runWs() }
+  const run = () => {
+    if (!query.trim()) return
+    if (mode === 'http') {
+      runHttp()
+    } else {
+      runWs()
+    }
+  }
 
   const verdictColor = finalResult?.composite_verdict === 'EXECUTE' ? 'border-green-500/40 bg-green-500/5'
     : finalResult?.composite_verdict === 'BLOCK' ? 'border-red-500/40 bg-red-500/5'
@@ -203,6 +216,10 @@ export default function Evaluator() {
               const verdict = data.result
                 ? String(data.result.verdict ?? data.result.status ?? data.result.final_verdict ?? data.result.risk_level ?? '')
                 : ''
+              const reasoning = resultText(data.result, 'reasoning')
+              const rationale = resultText(data.result, 'rationale')
+              const mitigation = resultText(data.result, 'mitigation')
+              const recommendation = resultText(data.result, 'recommendation')
               return (
                 <div key={aid} className="bg-gray-800/60 border border-gray-700 rounded-lg p-4 space-y-2">
                   <div className="flex items-center justify-between">
@@ -214,10 +231,10 @@ export default function Evaluator() {
                   </div>
                   {verdict && <VerdictBadge verdict={verdict.toUpperCase()} />}
                   {data.error && <p className="text-xs text-red-400">{data.error}</p>}
-                  {data.result?.reasoning && <p className="text-xs text-gray-400 leading-relaxed">{String(data.result.reasoning)}</p>}
-                  {data.result?.rationale && <p className="text-xs text-gray-400 leading-relaxed">{String(data.result.rationale)}</p>}
-                  {data.result?.mitigation && <p className="text-xs text-gray-400 leading-relaxed">{String(data.result.mitigation)}</p>}
-                  {data.result?.recommendation && <p className="text-xs text-gray-400 leading-relaxed">{String(data.result.recommendation)}</p>}
+                  {reasoning && <p className="text-xs text-gray-400 leading-relaxed">{reasoning}</p>}
+                  {rationale && <p className="text-xs text-gray-400 leading-relaxed">{rationale}</p>}
+                  {mitigation && <p className="text-xs text-gray-400 leading-relaxed">{mitigation}</p>}
+                  {recommendation && <p className="text-xs text-gray-400 leading-relaxed">{recommendation}</p>}
                   {data.result?.protection_score !== undefined && (
                     <ScoreBar score={Number(data.result.protection_score)} />
                   )}

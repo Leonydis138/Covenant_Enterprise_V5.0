@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Activity, Shield, Zap, Brain, GitBranch, Eye, TrendingUp } from 'lucide-react'
+import { Activity, Shield, Brain, GitBranch, Eye, TrendingUp } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 
 const AXIOMS = [
