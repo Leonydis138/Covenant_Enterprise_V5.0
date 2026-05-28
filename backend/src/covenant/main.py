@@ -138,6 +138,12 @@ async def rate_limit_middleware(request: Request, call_next):
         return await call_next(request)
 
     now = time()
+    if len(rate_limit_store) > 10000:
+        expired_before = now - settings.RATE_LIMIT_WINDOW_SECONDS
+        stale_keys = [k for k, (window_start, _) in rate_limit_store.items() if window_start < expired_before]
+        for key in stale_keys:
+            rate_limit_store.pop(key, None)
+
     ip = request.client.host if request.client else "unknown"
     window_start, count = rate_limit_store.get(ip, (now, 0))
     if now - window_start > settings.RATE_LIMIT_WINDOW_SECONDS:
