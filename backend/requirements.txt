@@ -63,7 +63,7 @@ opentelemetry-instrumentation-fastapi>=0.44b0
 opentelemetry-instrumentation-sqlalchemy>=0.44b0
 
 # Logging
-python-json-logger>=2.0.7
+python-json-logger>=4.1.0
 
 # HTTP Client
 httpx>=0.27.0
