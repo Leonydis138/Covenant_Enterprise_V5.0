@@ -45,7 +45,7 @@ sentence-transformers>=2.5.0
 # Boosting
 xgboost>=2.0.0
 lightgbm>=4.3.0
-optuna>=3.6.0
+optuna>=4.9.0
 
 # Explainability
 shap>=0.44.0
